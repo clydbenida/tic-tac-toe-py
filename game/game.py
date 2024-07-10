@@ -1,6 +1,7 @@
 from services.display import Display
 from services.input import Input
-from services.menu import Menu
+from services.menu.main import Menu
+from services.menu.menus import getMainMenu
 from helpers.constants import main_menu_items
 
 class Game:
@@ -10,16 +11,16 @@ class Game:
 
   def init(self, stdscr):
     display = Display(stdscr=stdscr)
-    main_menu = Menu(items=main_menu_items)
+    main_menu = getMainMenu()
 
-    display.print_banner()
-    display.print_menu(menu_items=main_menu.items)
-    # main_menu.print()
+    while True:
+      display.screen.clear()
 
-    key = display.get_key()
+      display.print_banner()
+      display.print_menu(menu=main_menu)
 
-    if key == ord('q'):
-      self.is_running = False 
+      display.screen.refresh()
+
 
   def end_game(self):
     self.is_running = False
